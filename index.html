@@ -1,92 +1,40 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Telegram Mini App</title>
+  <meta charset="UTF-8">
+  <title>Mini App Monetag</title>
 
-  <!-- Telegram WebApp Script -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 15px;
-      background: #f7f7f7;
-    }
-
-    .card {
-      background: white;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      margin-bottom: 15px;
-    }
-
-    button {
-      padding: 12px;
-      border: none;
-      background: #0088cc;
-      color: white;
-      border-radius: 8px;
-      width: 100%;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #006fa5;
-    }
-
-    #ad-container {
-      margin-top: 10px;
-      padding: 10px;
-      background: #fff;
-      border-radius: 10px;
-      text-align: center;
-    }
-  </style>
+  <!-- Monetag SDK -->
+  <script src='//libtl.com/sdk.js'
+          data-zone='10580493'
+          data-sdk='show_10580493'></script>
 </head>
 
-<body>
+<body style="font-family: Arial; text-align:center; margin-top:50px;">
 
-  <div class="card">
-    <h2>Mini App Telegram</h2>
-    <p id="user">Loading...</p>
-  </div>
+  <h2>Rewarded Ads</h2>
+  <p>Klik tombol untuk menonton iklan</p>
 
-  <div class="card">
-    <h3>Menu</h3>
-    <button onclick="showAlert()">Klik Aku</button>
-  </div>
+  <button onclick="tontonIklan()" style="padding:15px 30px; font-size:18px;">
+    Tonton Iklan
+  </button>
 
-  <div class="card">
-    <h3>Iklan Monetag</h3>
-    <div id="ad-container">
-      <p>Loading ads...</p>
-    </div>
-  </div>
+  <p id="status" style="margin-top:20px; font-weight:bold;"></p>
 
   <script>
-    const tg = window.Telegram.WebApp;
-    tg.expand();
+    function tontonIklan() {
+      document.getElementById("status").innerHTML = "Loading iklan...";
 
-    let username = tg.initDataUnsafe?.user?.first_name || "User";
-    document.getElementById("user").innerText = "Halo, " + username + " 👋";
-
-    function showAlert() {
-      tg.showAlert("Halo " + username + ", ini Mini App kamu!");
+      show_10580493().then(() => {
+        // Reward setelah user nonton iklan
+        document.getElementById("status").innerHTML = "Kamu sudah nonton iklan ✅";
+        alert("Reward berhasil!");
+      }).catch(() => {
+        document.getElementById("status").innerHTML = "Iklan gagal dimuat ❌";
+        alert("Iklan tidak tersedia, coba lagi.");
+      });
     }
   </script>
-
-  <!-- ========================= -->
-  <!-- PASTE SCRIPT MONETAG DISINI -->
-  <!-- ========================= -->
-
-  <!-- Contoh kalau Monetag kasih script src -->
-  <!--
-  <script src="https://your-monetag-script.js"></script>
-  -->
 
 </body>
 </html>
