@@ -1,95 +1,49 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Rewarded Ads Test</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reward Ads</title>
 
-  <!-- GigaPub Script -->
   <script src="https://ad.gigapub.tech/script?id=5557"></script>
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      height: 100vh;
-      align-items: center;
-      justify-content: center;
-      background: #111;
-      color: white;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    button {
-      padding: 12px 20px;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      background: #00c853;
-      color: white;
-      transition: 0.2s;
-    }
-
-    button:disabled {
-      background: gray;
-      cursor: not-allowed;
-    }
-
-    #status {
-      font-size: 14px;
-      opacity: 0.8;
-    }
-  </style>
 </head>
-<body>
+<body style="background:#111;color:white;text-align:center;padding-top:50px;">
 
-  <h2>Rewarded Ads</h2>
+  <h2>Reward Ads</h2>
+  <button id="btn" style="padding:12px 20px;border-radius:10px;border:none;">
+    🎥 Tonton Iklan
+  </button>
 
-  <button id="adBtn" onclick="showAd()">🎥 Tonton Iklan</button>
-  <div id="status">Status: Ready</div>
+  <p id="status">Status: Ready</p>
 
   <script>
-    const btn = document.getElementById("adBtn");
+    const btn = document.getElementById("btn");
     const statusText = document.getElementById("status");
 
-    function setStatus(msg) {
-      statusText.innerText = "Status: " + msg;
-    }
-
-    async function showAd() {
-      btn.disabled = true;
-      setStatus("Loading ad...");
-
+    btn.onclick = function () {
       if (!window.showGiga) {
-        setStatus("Script belum siap / diblokir");
-        alert("Gagal load script iklan.");
-        btn.disabled = false;
+        statusText.innerText = "Status: Script gagal load";
+        alert("showGiga tidak tersedia.");
         return;
       }
 
-      try {
-        setStatus("Ad playing...");
-        await window.showGiga();
+      btn.disabled = true;
+      statusText.innerText = "Status: Loading ad...";
 
-        // Reward logic
-        setStatus("Ad selesai! Reward diberikan 🎉");
-        alert("Reward berhasil diberikan!");
-        
-        // contoh reward:
-        // let coins = parseInt(localStorage.getItem("coins") || "0");
-        // coins += 10;
-        // localStorage.setItem("coins", coins);
-
-      } catch (e) {
-        console.log("Ad Error:", e);
-        setStatus("Ad gagal / dibatalkan ❌");
-        alert("Iklan dibatalkan atau tidak tersedia.");
-      }
-
-      btn.disabled = false;
-    }
+      window.showGiga()
+        .then(() => {
+          statusText.innerText = "Status: Reward sukses 🎉";
+          alert("Reward diberikan!");
+        })
+        .catch((e) => {
+          console.log(e);
+          statusText.innerText = "Status: Iklan tidak tersedia / dibatalkan ❌";
+          alert("Iklan dibatalkan atau tidak tersedia.");
+        })
+        .finally(() => {
+          btn.disabled = false;
+        });
+    };
   </script>
 
 </body>
