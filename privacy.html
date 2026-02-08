@@ -1,88 +1,156 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Privacy Policy</title>
+
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
-      background: #111;
-      color: white;
-      padding: 20px;
+      background: var(--tg-theme-bg-color, #0e0f12);
+      color: var(--tg-theme-text-color, #ffffff);
+    }
+
+    .header {
+      padding: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .container {
+      padding: 16px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    .card {
+      background: var(--tg-theme-secondary-bg-color, #17181d);
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 14px;
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 15px;
+    }
+
+    p, li {
+      font-size: 13px;
+      opacity: 0.75;
       line-height: 1.6;
     }
-    h1, h2 {
-      color: #00c853;
-    }
+
     a {
-      color: #00c853;
+      color: var(--tg-theme-link-color, #2ea6ff);
+      text-decoration: none;
+    }
+
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--tg-theme-secondary-bg-color, #17181d);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      justify-content: space-around;
+      padding: 10px 0;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: var(--tg-theme-hint-color, #aaaaaa);
+      font-size: 12px;
+      text-align: center;
+      flex: 1;
+    }
+
+    .footer a.active {
+      color: var(--tg-theme-link-color, #2ea6ff);
+      font-weight: bold;
+    }
+
+    .footer a div {
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+
+    .space {
+      height: 80px;
     }
   </style>
 </head>
+
 <body>
 
-  <h1>Privacy Policy</h1>
-  <p>Terakhir diperbarui: <b>2026</b></p>
+  <div class="header">Privacy Policy</div>
 
-  <p>
-    Halaman ini menjelaskan kebijakan privasi untuk aplikasi <b>Arii MiniApp</b>.
-    Dengan menggunakan aplikasi ini, Anda menyetujui kebijakan privasi berikut.
-  </p>
+  <div class="container">
+    <div class="card">
+      <h2>1. Informasi yang Dikumpulkan</h2>
+      <p>
+        Aplikasi ini tidak mengumpulkan data pribadi seperti nama, email, atau nomor telepon secara langsung.
+      </p>
 
-  <h2>1. Informasi yang Dikumpulkan</h2>
-  <p>
-    Aplikasi ini tidak mengumpulkan informasi pribadi secara langsung seperti nama,
-    email, atau nomor telepon.
-  </p>
+      <h2>2. Cookies & Tracking</h2>
+      <p>
+        Aplikasi ini dapat menggunakan cookies dan teknologi pelacakan untuk meningkatkan pengalaman pengguna.
+      </p>
 
-  <h2>2. Cookies dan Teknologi Pelacakan</h2>
-  <p>
-    Aplikasi ini dapat menggunakan cookies atau teknologi serupa untuk meningkatkan pengalaman pengguna.
-  </p>
+      <h2>3. Iklan Pihak Ketiga</h2>
+      <p>
+        Aplikasi ini menampilkan iklan dari pihak ketiga (contohnya GigaPub). Pihak ketiga dapat mengumpulkan:
+      </p>
+      <ul>
+        <li>Alamat IP</li>
+        <li>Jenis perangkat</li>
+        <li>Browser</li>
+        <li>Lokasi perkiraan</li>
+        <li>Interaksi pengguna dengan iklan</li>
+      </ul>
 
-  <h2>3. Iklan Pihak Ketiga</h2>
-  <p>
-    Aplikasi ini menampilkan iklan dari pihak ketiga (contohnya GigaPub).
-    Penyedia iklan dapat mengumpulkan data non-pribadi seperti:
-  </p>
-  <ul>
-    <li>Alamat IP</li>
-    <li>Jenis perangkat</li>
-    <li>Browser yang digunakan</li>
-    <li>Lokasi perkiraan (berdasarkan IP)</li>
-    <li>Interaksi pengguna dengan iklan</li>
-  </ul>
+      <h2>4. Perubahan</h2>
+      <p>
+        Privacy Policy ini dapat berubah kapan saja dan akan diperbarui pada halaman ini.
+      </p>
 
-  <h2>4. Penggunaan Data</h2>
-  <p>
-    Data yang dikumpulkan oleh pihak ketiga digunakan untuk menampilkan iklan yang relevan
-    dan untuk analitik performa iklan.
-  </p>
+      <h2>5. Kontak</h2>
+      <p>
+        Jika ada pertanyaan, hubungi Telegram bot kami:
+        <a href="https://t.me/arii_bot">https://t.me/arii_bot</a>
+      </p>
+    </div>
 
-  <h2>5. Keamanan</h2>
-  <p>
-    Kami berusaha menjaga keamanan aplikasi, namun tidak dapat menjamin keamanan 100%
-    terhadap akses pihak ketiga.
-  </p>
+    <div class="space"></div>
+  </div>
 
-  <h2>6. Tautan Pihak Ketiga</h2>
-  <p>
-    Aplikasi ini dapat berisi tautan ke situs pihak ketiga. Kami tidak bertanggung jawab atas
-    kebijakan privasi situs tersebut.
-  </p>
+  <div class="footer">
+    <a href="index.html">
+      <div>🏠</div>
+      Home
+    </a>
+    <a href="about.html">
+      <div>ℹ️</div>
+      About
+    </a>
+    <a href="privacy.html" class="active">
+      <div>🔒</div>
+      Privacy
+    </a>
+  </div>
 
-  <h2>7. Perubahan Kebijakan</h2>
-  <p>
-    Kebijakan privasi ini dapat diperbarui kapan saja. Perubahan akan ditampilkan di halaman ini.
-  </p>
-
-  <h2>8. Kontak</h2>
-  <p>
-    Jika ada pertanyaan tentang Privacy Policy ini, silakan hubungi kami melalui Telegram:
-    <br>
-    <a href="https://t.me/arii_bot">https://t.me/arii_bot</a>
-  </p>
+  <script>
+    if (window.Telegram && Telegram.WebApp) {
+      Telegram.WebApp.ready();
+      Telegram.WebApp.expand();
+    }
+  </script>
 
 </body>
 </html>
