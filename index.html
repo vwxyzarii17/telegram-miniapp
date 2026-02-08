@@ -5,12 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reward Ads</title>
 
-  
-<script src="https://ad.gigapub.tech/script?id=5558"></script>
+  <script src="https://ad.gigapub.tech/script?id=5558"></script>
 </head>
+
 <body style="background:#111;color:white;text-align:center;padding-top:50px;">
 
   <h2>Reward Ads</h2>
+
   <button id="btn" style="padding:12px 20px;border-radius:10px;border:none;">
     🎥 Tonton Iklan
   </button>
@@ -31,14 +32,20 @@
       btn.disabled = true;
       statusText.innerText = "Status: Loading ad...";
 
-      
-window.showGiga()
-  .then(() => {
-    // Your reward logic here
-  })
-  .catch(e => {
-    // Handle errors here
-  });
+      window.showGiga()
+        .then(() => {
+          statusText.innerText = "Status: Reward sukses 🎉";
+          alert("Reward diberikan!");
+        })
+        .catch(e => {
+          console.log("Error:", e);
+          statusText.innerText = "Status: Iklan tidak tersedia / dibatalkan ❌";
+          alert("Iklan dibatalkan atau tidak tersedia.");
+        })
+        .finally(() => {
+          btn.disabled = false;
+        });
+    };
   </script>
 
 </body>
