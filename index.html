@@ -1,52 +1,94 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Mini App Monetag</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rewarded Ads Test</title>
 
-  <!-- Telegram WebApp -->
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- GigaPub Script -->
+  <script src="https://ad.gigapub.tech/script?id=5557"></script>
 
-  <!-- Monetag SDK -->
-  <script src="https://libtl.com/sdk.js"
-          data-zone="10580493"
-          data-sdk="show_10580493"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      height: 100vh;
+      align-items: center;
+      justify-content: center;
+      background: #111;
+      color: white;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    button {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 16px;
+      background: #00c853;
+      color: white;
+      transition: 0.2s;
+    }
+
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+
+    #status {
+      font-size: 14px;
+      opacity: 0.8;
+    }
+  </style>
 </head>
-
-<body style="font-family: Arial; text-align:center; margin-top:50px;">
+<body>
 
   <h2>Rewarded Ads</h2>
-  <p>Klik tombol untuk menonton iklan</p>
 
-  <button onclick="tontonIklan()" style="padding:15px 30px; font-size:18px; cursor:pointer;">
-    Tonton Iklan
-  </button>
-
-  <p id="status" style="margin-top:20px; font-weight:bold;"></p>
+  <button id="adBtn" onclick="showAd()">🎥 Tonton Iklan</button>
+  <div id="status">Status: Ready</div>
 
   <script>
-    // preload iklan saat halaman dibuka
-    window.onload = function () {
-      try {
-        show_10580493({ type: "preload", ymid: "event-123" });
-        console.log("Preload berhasil");
-      } catch (e) {
-        console.log("Preload error", e);
+    const btn = document.getElementById("adBtn");
+    const statusText = document.getElementById("status");
+
+    function setStatus(msg) {
+      statusText.innerText = "Status: " + msg;
+    }
+
+    async function showAd() {
+      btn.disabled = true;
+      setStatus("Loading ad...");
+
+      if (!window.showGiga) {
+        setStatus("Script belum siap / diblokir");
+        alert("Gagal load script iklan.");
+        btn.disabled = false;
+        return;
       }
-    };
 
-    function tontonIklan() {
-      document.getElementById("status").innerHTML = "Loading iklan...";
+      try {
+        setStatus("Ad playing...");
+        await window.showGiga();
 
-      show_10580493({ ymid: "event-123" })
-        .then(() => {
-          document.getElementById("status").innerHTML = "Iklan selesai ✅";
-          alert("Kamu sudah menonton iklan!");
-        })
-        .catch(() => {
-          document.getElementById("status").innerHTML = "Iklan gagal / tidak tersedia ❌";
-          alert("Iklan gagal atau tidak tersedia, coba lagi.");
-        });
+        // Reward logic
+        setStatus("Ad selesai! Reward diberikan 🎉");
+        alert("Reward berhasil diberikan!");
+        
+        // contoh reward:
+        // let coins = parseInt(localStorage.getItem("coins") || "0");
+        // coins += 10;
+        // localStorage.setItem("coins", coins);
+
+      } catch (e) {
+        console.log("Ad Error:", e);
+        setStatus("Ad gagal / dibatalkan ❌");
+        alert("Iklan dibatalkan atau tidak tersedia.");
+      }
+
+      btn.disabled = false;
     }
   </script>
 
