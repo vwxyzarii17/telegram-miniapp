@@ -8,8 +8,8 @@
   <!-- Telegram WebApp SDK -->
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-  <!-- GigaPub Ads -->
-  <script src="https://ad.gigapub.tech/script?id=5558"></script>
+  <!-- LibTL Ads -->
+  <script src='//libtl.com/sdk.js' data-zone='10580493' data-sdk='show_10580493'></script>
 
   <style>
     body {
@@ -189,34 +189,78 @@
     const statusText = document.getElementById("statusText");
     const statusIcon = document.getElementById("statusIcon");
 
+    const API_URL = "https://telegram-miniapp4.vercel.app";
+    const telegram_id = Telegram.WebApp?.initDataUnsafe?.user?.id;
+
     function setStatus(text, icon) {
       statusText.innerText = "Status: " + text;
       statusIcon.innerText = icon;
     }
 
+    async function claimReward() {
+      try {
+        const res = await fetch(`${API_URL}/api/claim`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ telegram_id })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          if (data.wait) {
+            alert("Cooldown! Tunggu " + data.wait + " detik.");
+          } else {
+            alert("Claim gagal: " + (data.error || "Unknown error"));
+          }
+          return null;
+        }
+
+        return data;
+      } catch (err) {
+        console.log("Claim Error:", err);
+        alert("Server error saat claim!");
+        return null;
+      }
+    }
+
     btn.onclick = function () {
-      if (!window.showGiga) {
+      if (!telegram_id) {
+        alert("Telegram ID tidak tersedia.");
+        return;
+      }
+
+      // cek SDK LibTL
+      if (!window.show_10580493) {
         setStatus("Ads script gagal load", "⚠️");
-        alert("showGiga tidak tersedia. Script iklan gagal load.");
+        alert("show_10580493 tidak tersedia. SDK LibTL gagal load.");
         return;
       }
 
       btn.disabled = true;
       setStatus("Loading ad...", "⏳");
 
-      window.showGiga()
-        .then(() => {
-          setStatus("Reward sukses!", "🎉");
+      // tampilkan iklan LibTL
+      show_10580493()
+        .then(async () => {
+          setStatus("Claiming reward...", "💰");
 
-          // Telegram haptic (getar)
-          if (window.Telegram && Telegram.WebApp) {
-            Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+          const claim = await claimReward();
+
+          if (claim) {
+            setStatus("Reward sukses!", "🎉");
+
+            if (window.Telegram && Telegram.WebApp) {
+              Telegram.WebApp.HapticFeedback.notificationOccurred("success");
+            }
+
+            alert("Reward berhasil! +" + claim.reward + " coin\nBalance: " + claim.balance);
+          } else {
+            setStatus("Claim gagal", "❌");
           }
-
-          alert("Reward berhasil diberikan!");
         })
         .catch(e => {
-          console.log("Giga Error:", e);
+          console.log("Ads Error:", e);
           setStatus("Iklan tidak tersedia / dibatalkan", "❌");
 
           if (window.Telegram && Telegram.WebApp) {
